@@ -34,23 +34,31 @@ public class AutoSignal extends CommandOpMode {
             new WaitUntilCommand(this::isStarted),
             new InstantCommand(() -> {
                 telemetry.addLine("Signal State: " + signalSystem.GetResult().name());
-                telemetry.update();
+                telemetry.update(); 
             }),
+            moveForward(Config.AUTO_DRIVE_FWD_TIME),
             new SelectCommand(this::chooseCommand)
         );
     }
     
     private Command chooseCommand() {
-        double speed = 0.3;
-        double time = 1500;
+        double time = Config.AUTO_DRIVE_STRAFE_TIME;
         
         switch (signalSystem.GetResult()) {
             case One:
-                return new MoveTime(timer, drive, -speed, 0, 0, time);
+                return moveSideways(-1, time);
             case Three:
-                return new MoveTime(timer, drive, speed, 0, 0, time);
+                return moveSideways(1, time);
             default:
-                return new MoveTime(timer, drive, 0, 0, 0, 0);
+                return moveForward(0);
         }
+    }
+    
+    private MoveTime moveForward(double time) {
+        return new MoveTime(timer, drive, 0, Config.AUTO_DRIVE_SPEED, 0, time);
+    }
+    
+    private MoveTime moveSideways(int direction, double time) {
+        return new MoveTime(timer, drive, direction * Config.AUTO_DRIVE_SPEED, 0, 0, time);
     }
 }
