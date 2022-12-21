@@ -24,4 +24,8 @@ public class Config {
     public static volatile double ELEVATOR_KA = 0.0;
     public static volatile double ELEVATOR_SPEED = 1;
     
+    // Autonomous Settings
+    public static volatile double AUTO_DRIVE_SPEED = 0.33;
+    public static volatile double AUTO_DRIVE_STRAFE_TIME = 1500;
+    public static volatile double AUTO_DRIVE_FWD_TIME = 1500;
 }
