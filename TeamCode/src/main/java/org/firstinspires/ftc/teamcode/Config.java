@@ -2,30 +2,23 @@ package org.firstinspires.ftc.teamcode;
 
 @com.acmerobotics.dashboard.config.Config
 public class Config {
-    // Motors
-    public static volatile String MOTOR_ELEVATOR = "motor_elevator";
+    // Drivetrain
     public static volatile String DRIVE_FRONT_LEFT = "drive_front_left";
     public static volatile String DRIVE_FRONT_RIGHT = "drive_front_right";
     public static volatile String DRIVE_BACK_LEFT = "drive_back_left";
     public static volatile String DRIVE_BACK_RIGHT = "drive_back_right";
-    
-    // TeleOp Settings
-    public static volatile boolean DRIVE_FIELD_CENTRIC = false;
+
     public static volatile double DRIVE_CURVE = 1.5;
     public static volatile double DRIVE_DEAD_ZONE = 0.05;
     public static volatile double DRIVE_STRAFE_SENSITIVITY = 1;
     public static volatile double DRIVE_FORWARD_SENSITIVITY = 1;
     public static volatile double DRIVE_TURN_SENSITIVITY = 1;
-    
+
     // Elevator
-    public static volatile double ELEVATOR_KS = 0.0;
-    public static volatile double ELEVATOR_KG = 0.0;
-    public static volatile double ELEVATOR_KV = 0.0;
-    public static volatile double ELEVATOR_KA = 0.0;
-    public static volatile double ELEVATOR_SPEED = 1;
-    
-    // Autonomous Settings
-    public static volatile double AUTO_DRIVE_SPEED = 0.33;
-    public static volatile double AUTO_DRIVE_STRAFE_TIME = 1500;
-    public static volatile double AUTO_DRIVE_FWD_TIME = 1500;
+    public static volatile String MOTOR_ELEVATOR = "motor_elevator";
+
+    // Claw
+    public static volatile String SERVO_CLAW = "servo_claw";
+    public static volatile double CLAW_CLOSE_ANGLE = -50;
+    public static volatile double CLAW_OPEN_ANGLE = 50;
 }

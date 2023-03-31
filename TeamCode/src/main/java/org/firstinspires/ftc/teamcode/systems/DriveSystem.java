@@ -18,7 +18,6 @@ import org.firstinspires.ftc.teamcode.Config;
  * desired drivetrain commands can be more effectively called to this.
  */
 public class DriveSystem extends SubsystemBase {
-    IMU imu;
     MecanumDrive drive;
     
     double strafe = 0;
@@ -29,16 +28,6 @@ public class DriveSystem extends SubsystemBase {
      * Creates a new DriveSystem.
      */
     public DriveSystem(final HardwareMap hardwareMap) {
-        imu = hardwareMap.get(IMU.class, "imu");
-        imu.initialize(
-            new IMU.Parameters(
-                new RevHubOrientationOnRobot(
-                    RevHubOrientationOnRobot.LogoFacingDirection.FORWARD, 
-                    RevHubOrientationOnRobot.UsbFacingDirection.UP
-                )
-            )
-        );
-        
         Motor frontLeft = new Motor(hardwareMap, Config.DRIVE_FRONT_LEFT);
         Motor frontRight = new Motor(hardwareMap, Config.DRIVE_FRONT_RIGHT);
         Motor backLeft = new Motor(hardwareMap, Config.DRIVE_BACK_LEFT);
@@ -50,23 +39,12 @@ public class DriveSystem extends SubsystemBase {
     @Override
     public void periodic() {
         TelemetryPacket packet = new TelemetryPacket();
-        packet.put("heading", getHeading());
         packet.put("strafe", strafe);
         packet.put("forward", forward);
         packet.put("turn", turn);
         FtcDashboard.getInstance().sendTelemetryPacket(packet);
         
-        if (Config.DRIVE_FIELD_CENTRIC) {
-            drive.driveFieldCentric(strafe, forward, turn, getHeading());
-        } else {
-            drive.driveRobotCentric(strafe, forward, turn);
-        }
-    }
-    
-    public void setAll(double strafe, double forward, double turn) {
-        this.strafe = strafe;
-        this.forward = forward;
-        this.turn = turn;
+        drive.driveRobotCentric(-strafe, -forward, -turn);
     }
     
     public void setStrafe(double input) {
@@ -81,12 +59,14 @@ public class DriveSystem extends SubsystemBase {
         turn = input;
     }
 
+    public void setAll(double strafe, double forward, double turn) {
+        this.strafe = strafe;
+        this.forward = forward;
+        this.turn = turn;
+    }
+
     public void stop() {
         strafe = forward = turn = 0;
         drive.stop();
-    }
-    
-    private double getHeading() {
-        return imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.DEGREES);
     }
 }
