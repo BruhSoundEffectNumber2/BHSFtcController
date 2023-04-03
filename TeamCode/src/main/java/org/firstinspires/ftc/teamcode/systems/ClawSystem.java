@@ -47,6 +47,6 @@ public class ClawSystem extends SubsystemBase {
 
     public void close() {
         open = false;
-        servo.setPosition(Config.CLAW_CLOSE_ANGLE);
+        servo.turnToAngle(Config.CLAW_CLOSE_ANGLE);
     }
 }

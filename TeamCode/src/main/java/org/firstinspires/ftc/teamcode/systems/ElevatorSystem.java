@@ -21,7 +21,7 @@ public class ElevatorSystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        motor.set(velocity);
+        motor.set(-velocity);
     }
 
     public void setVelocity(double vel) {

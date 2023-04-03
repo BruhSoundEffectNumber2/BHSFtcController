@@ -17,12 +17,7 @@ public class ControlClaw extends CommandBase {
         this.controls = new GamepadEx(controls);
 
         addRequirements(system);
-    }
 
-    @Override
-    public void execute() {
-        new GamepadButton(controls, GamepadKeys.Button.A).whenPressed(
-                () -> system.toggle()
-        );
+        new GamepadButton(this.controls, GamepadKeys.Button.A).whenPressed(system::toggle);
     }
 }

@@ -19,6 +19,6 @@ public class Config {
 
     // Claw
     public static volatile String SERVO_CLAW = "servo_claw";
-    public static volatile double CLAW_CLOSE_ANGLE = -50;
+    public static volatile double CLAW_CLOSE_ANGLE = -20;
     public static volatile double CLAW_OPEN_ANGLE = 50;
 }
