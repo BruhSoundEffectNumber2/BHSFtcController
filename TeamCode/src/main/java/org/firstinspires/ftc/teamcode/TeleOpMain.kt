@@ -5,6 +5,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.arcrobotics.ftclib.command.CommandOpMode
 import com.arcrobotics.ftclib.gamepad.GamepadEx
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
+import org.firstinspires.ftc.teamcode.grab.Grab
+import org.firstinspires.ftc.teamcode.grab.GrabSubsystem
 import org.firstinspires.ftc.teamcode.move.DriveManually
 import org.firstinspires.ftc.teamcode.move.MoveSubsystem
 
@@ -16,7 +18,11 @@ class TeleOpMain : CommandOpMode() {
     private val moveSubsystem = MoveSubsystem(hardwareMap, robotTelemetry)
     private val driveManually = DriveManually(robotTelemetry, moveSubsystem, GamepadEx(gamepad1))
 
+    private val grabSubsystem = GrabSubsystem(hardwareMap, robotTelemetry)
+    private val grab = Grab(robotTelemetry, grabSubsystem, GamepadEx(gamepad2))
+
     override fun initialize() {
         schedule(driveManually)
+        schedule(grab)
     }
 }

@@ -17,7 +17,8 @@ object Hardware {
 
     // Elevator
     @JvmField var MOTOR_ELEVATOR = "motor_elevator"
+    @JvmField var ELEVATOR_MOTOR_TYPE = GoBILDA.RPM_312
 
     // Grabber
-    @JvmField var SERVO_GRABBER = "motor_elevator"
+    @JvmField var SERVO_GRABBER = "servo_grabber"
 }
