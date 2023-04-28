@@ -11,26 +11,41 @@ import org.firstinspires.ftc.teamcode.config.Hardware
  * System that controls the elevator.
  */
 class ElevatorSubsystem(
-        hardwareMap: HardwareMap,
-        telemetry: MultipleTelemetry
+    hardwareMap: HardwareMap,
+    telemetry: MultipleTelemetry
 ) : SimpleSubsystem<Motor>(hardwareMap, telemetry) {
     enum class ElevatorMode {
         Free,
         Controlled
     }
 
+    var stopped = true
+
     var mode = ElevatorMode.Controlled
-       private set
+        private set
 
     val currentPos: Double
         get() = component.currentPosition / Elevator.TICKS_TO_HEIGHT
 
     override fun createComponent(): Motor {
-        return Motor(
-                hardwareMap,
-                Hardware.MOTOR_ELEVATOR,
-                Hardware.ELEVATOR_MOTOR_TYPE
+        val motor = Motor(
+            hardwareMap,
+            Hardware.MOTOR_ELEVATOR,
+            Hardware.ELEVATOR_MOTOR_TYPE
         )
+
+        motor.setRunMode(Motor.RunMode.VelocityControl)
+        motor.setPositionTolerance(Elevator.POS_TOLERANCE)
+
+        motor.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE)
+        motor.set(0.0)
+
+        return motor
+    }
+
+    override fun periodic() {
+        // If the motor is stopped, set speed to 0, otherwise set it to our test value
+        component.set((if (stopped) 0 else Elevator.TEST_MOTOR_SET) as Double)
     }
 
     /**
@@ -41,6 +56,15 @@ class ElevatorSubsystem(
      * @param useBase Whether to consider the elevators existing height off the ground.
      */
     fun moveToPos(height: Double, useBase: Boolean = true) {
-        val trueHeight = height
+        mode = ElevatorMode.Controlled
+
+        // Calculate the final height we are traveling to
+        val trueHeight =
+            (height - (if (useBase) Elevator.HEIGHT_OFFSET else 0) as Double).coerceIn(
+                Elevator.MIN_HEIGHT,
+                Elevator.MAX_HEIGHT
+            )
+
+        component.setTargetPosition((trueHeight * Elevator.TICKS_TO_HEIGHT).toInt())
     }
 }
