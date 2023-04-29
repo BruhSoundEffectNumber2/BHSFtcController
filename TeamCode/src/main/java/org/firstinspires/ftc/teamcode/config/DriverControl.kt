@@ -13,12 +13,12 @@ object DriverControl {
     @JvmField var TURN_DEADZONE = 0.0
 
     // Power curves
-    @JvmField var FORWARD_CURVE = 0.0
-    @JvmField var STRAFE_CURVE = 0.0
-    @JvmField var TURN_CURVE = 0.0
+    @JvmField var FORWARD_CURVE = 1.0
+    @JvmField var STRAFE_CURVE = 1.0
+    @JvmField var TURN_CURVE = 1.0
 
     // Sensitivity to input
-    @JvmField var FORWARD_SCALE = 0.0
-    @JvmField var STRAFE_SCALE = 0.0
-    @JvmField var TURN_SCALE = 0.0
+    @JvmField var FORWARD_SCALE = 1.0
+    @JvmField var STRAFE_SCALE = 1.0
+    @JvmField var TURN_SCALE = 1.0
 }
