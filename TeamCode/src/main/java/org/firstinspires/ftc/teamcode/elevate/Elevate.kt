@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.arcrobotics.ftclib.command.button.GamepadButton
 import com.arcrobotics.ftclib.gamepad.GamepadEx
 import com.arcrobotics.ftclib.gamepad.GamepadKeys
+import com.arcrobotics.ftclib.util.Direction
 import org.firstinspires.ftc.teamcode.SimpleCommand
 import org.firstinspires.ftc.teamcode.config.Elevator
 import org.firstinspires.ftc.teamcode.inputToPower
@@ -11,9 +12,11 @@ import kotlin.math.abs
 
 /**
  * Command to control the elevator.
+ *
+ * @param controls The gamepad to use for manual control. A null value means autonomous control.
  */
 class Elevate(
-    telemetry: MultipleTelemetry, system: ElevatorSubsystem, private val controls: GamepadEx
+    telemetry: MultipleTelemetry, system: ElevatorSubsystem, private val controls: GamepadEx?
 ) : SimpleCommand<ElevatorSubsystem>(telemetry, system) {
     /**
      * Which preselected height we are at.
@@ -22,11 +25,17 @@ class Elevate(
     private var preset = -1
 
     override fun initialize() {
+        // If we are in autonomous mode, we don't want to do anything here
+        if (controls == null) return
+        
         GamepadButton(controls, GamepadKeys.Button.DPAD_UP).whenPressed(this::increasePreset)
         GamepadButton(controls, GamepadKeys.Button.DPAD_DOWN).whenPressed(this::decreasePreset)
     }
 
     override fun execute() {
+        // If we are in autonomous mode, we don't want to do anything here
+        if (controls == null) return
+        
         val manualInput = inputToPower(
             controls.rightY,
             Elevator.ELEVATOR_CURVE,
@@ -51,18 +60,18 @@ class Elevate(
     }
 
     private fun increasePreset() {
-        changePreset(1)
+        changePreset(Direction.UP)
     }
 
     private fun decreasePreset() {
-        changePreset(-1)
+        changePreset(Direction.DOWN)
     }
 
-    private fun changePreset(direction: Int) {
+    private fun changePreset(direction: Direction) {
         if (preset == -1) {
             preset = closestPreset(direction)
         } else if (preset < Elevator.ELEVATOR_PRESET_HEIGHTS.lastIndex) {
-            preset += direction
+            preset += if (direction == Direction.UP) 1 else -1
         }
 
         system.moveToPos(Elevator.ELEVATOR_PRESET_HEIGHTS[preset])
@@ -71,37 +80,37 @@ class Elevate(
     /**
      * Returns the closest preset to the current position in the given direction.
      *
-     * @param direction The direction to search in. 1 for up, -1 for down, 0 for closest.
-     * 
+     * @param direction The direction to search in. Up, Down, or null for closest.
+     *
      * @return The index of the closest preset. -1 if there are no presets in the given direction.
      */
-    private fun closestPreset(direction: Int): Int {
+    private fun closestPreset(direction: Direction?): Int {
         val currentPos = system.currentPos
 
         /*
         We want to find the preset with the minimum difference between the preset height and the current height.
         We only want to consider presets in the given direction, if any.
          */
-        
+
         when (direction) {
-            0 -> {
+            null -> {
                 // We only want the closest
                 return Elevator.ELEVATOR_PRESET_HEIGHTS.withIndex().minByOrNull {
                     abs(it.value - currentPos)
                 }!!.index
             }
-            1, -1 -> {
+            Direction.UP, Direction.DOWN -> {
                 // We want the closest preset above or below the current position
-                
+
                 // Start with the closest preset
-                var closest = closestPreset(0)
-                
-                if (direction == 1) {
+                var closest = closestPreset(null)
+
+                if (direction == Direction.UP) {
                     if (closest == Elevator.ELEVATOR_PRESET_HEIGHTS.lastIndex) {
                         // We are already at the top
                         return closest
                     }
-                    
+
                     // Move up until we find a preset above the current position
                     while (Elevator.ELEVATOR_PRESET_HEIGHTS[closest] < currentPos) {
                         closest++
@@ -111,13 +120,13 @@ class Elevate(
                         // We are already at the bottom
                         return 0
                     }
-                    
+
                     // Move down until we find a preset below the current position
                     while (Elevator.ELEVATOR_PRESET_HEIGHTS[closest] > currentPos) {
                         closest--
                     }
                 }
-                
+
                 return closest
             }
             else -> {

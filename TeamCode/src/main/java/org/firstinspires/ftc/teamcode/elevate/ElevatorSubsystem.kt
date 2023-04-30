@@ -77,6 +77,7 @@ class ElevatorSubsystem(
 
         telemetry.addData("Elevator Mode", if (stopped) "Stopped" else mode)
         telemetry.addData("Elevator Position", currentPos)
+        telemetry.addData("Elevator Raw Position", component.currentPosition)
         telemetry.addData("Elevator Current Draw", currentDraw)
         telemetry.addData(
             "Elevator Current Draw Derivative",

@@ -24,12 +24,21 @@ android {
     }
 }
 
+task generatePrograms(type: Exec) {
+    workingDir project.projectDir
+    commandLine "python", "${project.projectDir}/generate_programs.py"
+}
+
 dependencies {
     implementation project(':FtcRobotController')
-    implementation 'androidx.core:core-ktx:1.10.0'
+    implementation 'androidx.core:core-ktx:1.6.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
     annotationProcessor files('lib/OpModeAnnotationProcessor.jar')
 
     // FTCLib
     implementation 'org.ftclib.ftclib:core:2.1.1'
-    implementation 'org.ftclib.ftclib:vision:2.1.1'
+    implementation 'org.ftclib.ftclib:vision:2.1.0'
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.21"
 }
+
+// preBuild.dependsOn generatePrograms

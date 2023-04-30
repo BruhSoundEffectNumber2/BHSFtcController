@@ -21,4 +21,7 @@ object Hardware {
 
     // Grabber
     @JvmField var SERVO_GRABBER = "servo_grabber"
+    
+    // Camera
+    @JvmField var CAMERA = "Webcam 1"
 }
