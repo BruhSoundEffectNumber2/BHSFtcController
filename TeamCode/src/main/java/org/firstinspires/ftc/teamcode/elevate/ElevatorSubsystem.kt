@@ -19,7 +19,7 @@ class ElevatorSubsystem(
         Free, Controlled
     }
 
-    var stopped = true
+    var stopped = false
         set(value) {
             field = value
             if (value) {
@@ -83,7 +83,7 @@ class ElevatorSubsystem(
             "Elevator Current Draw Derivative",
             (currentDraw - previousDraw) / (System.currentTimeMillis() - previousDrawTime)
         )
-        telemetry.update()
+        //telemetry.update()
     }
 
     /**

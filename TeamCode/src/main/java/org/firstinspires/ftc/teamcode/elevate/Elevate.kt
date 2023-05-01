@@ -46,7 +46,7 @@ class Elevate(
         // Manual control takes priority over automatic control
         // We only care about changing if we aren't in manual mode
         if (system.mode != ElevatorSubsystem.ElevatorMode.Free) {
-            if (abs(manualInput) == 0.001) {
+            if (abs(manualInput) > 0.001) {
                 system.move(manualInput)
             }
         } else {

@@ -13,11 +13,6 @@ import org.firstinspires.ftc.teamcode.inputToPower
 class DriveManually(
     telemetry: MultipleTelemetry, system: MoveSubsystem, private val controls: GamepadEx
 ) : SimpleCommand<MoveSubsystem>(telemetry, system) {
-    override fun initialize() {
-        telemetry.addLine("DriveManually initialized. This should happen on start, not init.")
-        telemetry.update()
-    }
-
     override fun execute() {
         system.forward = inputToPower(
             controls.leftY,
@@ -39,7 +34,7 @@ class DriveManually(
         )
 
         system.turn = inputToPower(
-            controls.leftX,
+            controls.rightX,
             DriverControl.TURN_CURVE,
             DriverControl.TURN_DEADZONE,
             DriverControl.TURN_SCALE
