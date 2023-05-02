@@ -4,7 +4,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.arcrobotics.ftclib.hardware.SimpleServo
 import com.qualcomm.robotcore.hardware.HardwareMap
 import org.firstinspires.ftc.teamcode.SimpleSubsystem
-import org.firstinspires.ftc.teamcode.config.Grabber
+import org.firstinspires.ftc.teamcode.config.Claw
 import org.firstinspires.ftc.teamcode.config.Hardware
 
 /**
@@ -19,9 +19,9 @@ class GrabSubsystem(
     override fun createComponent(): SimpleServo {
         return SimpleServo(
                 hardwareMap,
-                Hardware.SERVO_GRABBER,
-                Grabber.MIN_ANGLE,
-                Grabber.MAX_ANGLE
+                Hardware.CLAW,
+                Claw.MIN_ANGLE,
+                Claw.MAX_ANGLE
         )
     }
 
@@ -34,10 +34,10 @@ class GrabSubsystem(
     }
 
     fun open() {
-        component.turnToAngle(Grabber.OPEN_ANGLE)
+        component.turnToAngle(Claw.OPEN_ANGLE)
     }
 
     fun close() {
-        component.turnToAngle(Grabber.CLOSE_ANGLE)
+        component.turnToAngle(Claw.CLOSE_ANGLE)
     }
 }

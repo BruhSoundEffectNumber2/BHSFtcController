@@ -5,8 +5,8 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.arcrobotics.ftclib.command.CommandOpMode
 import com.arcrobotics.ftclib.gamepad.GamepadEx
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.elevate.Elevate
-import org.firstinspires.ftc.teamcode.elevate.ElevatorSubsystem
+import org.firstinspires.ftc.teamcode.elevator.Elevate
+import org.firstinspires.ftc.teamcode.elevator.ElevatorSubsystem
 import org.firstinspires.ftc.teamcode.grab.Grab
 import org.firstinspires.ftc.teamcode.grab.GrabSubsystem
 import org.firstinspires.ftc.teamcode.move.DriveManually
@@ -14,12 +14,10 @@ import org.firstinspires.ftc.teamcode.move.MoveSubsystem
 
 @TeleOp(name = "Main TeleOp")
 class TeleOpMain : CommandOpMode() {
-    private lateinit var dashboard: FtcDashboard
     private lateinit var robotTelemetry: MultipleTelemetry
 
     override fun initialize() {
-        dashboard = FtcDashboard.getInstance()
-        robotTelemetry = MultipleTelemetry(telemetry, dashboard.telemetry)
+        robotTelemetry = MultipleTelemetry(telemetry, FtcDashboard.getInstance().telemetry)
 
         val moveSubsystem = MoveSubsystem(hardwareMap, robotTelemetry)
         val driveManually = DriveManually(robotTelemetry, moveSubsystem, GamepadEx(gamepad1))
@@ -35,6 +33,8 @@ class TeleOpMain : CommandOpMode() {
 
     override fun run() {
         super.run()
+        
+        // We want to have one telemetry update at the end of the loop
         telemetry.update()
     }
 }

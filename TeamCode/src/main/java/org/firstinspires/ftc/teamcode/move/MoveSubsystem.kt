@@ -38,19 +38,16 @@ class MoveSubsystem(
         telemetry.addData("Forward", forward)
         telemetry.addData("Strafe", strafe)
         telemetry.addData("Turn", turn)
-        //telemetry.update()
         
         component.driveRobotCentric(strafe, forward, turn)
     }
 
     override fun createComponent(): MecanumDrive {
         return MecanumDrive(
-            // Our drivetrain motors need to be inverted
-            false,
-            Motor(hardwareMap, Hardware.DRIVE_FRONT_LEFT, Hardware.DRIVE_MOTOR_TYPE),
-            Motor(hardwareMap, Hardware.DRIVE_FRONT_RIGHT, Hardware.DRIVE_MOTOR_TYPE),
-            Motor(hardwareMap, Hardware.DRIVE_BACK_LEFT, Hardware.DRIVE_MOTOR_TYPE),
-            Motor(hardwareMap, Hardware.DRIVE_BACK_RIGHT, Hardware.DRIVE_MOTOR_TYPE),
+            Motor(hardwareMap, Hardware.FRONT_LEFT, Hardware.DRIVE_TYPE),
+            Motor(hardwareMap, Hardware.FRONT_RIGHT, Hardware.DRIVE_TYPE),
+            Motor(hardwareMap, Hardware.BACK_LEFT, Hardware.DRIVE_TYPE),
+            Motor(hardwareMap, Hardware.BACK_RIGHT, Hardware.DRIVE_TYPE),
         )
     }
 

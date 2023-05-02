@@ -3,19 +3,11 @@ package org.firstinspires.ftc.teamcode.config
 import com.acmerobotics.dashboard.config.Config
 
 @Config
-/**
- * Parameters for the elevator.
- */
 object Elevator {
-    /**
-     * The coefficient for the elevator's P controller.
-     */
-    @JvmField var POS_COEFFICIENT = 1.0
-
     /**
      * How close does the elevator need to be to it's target position (ticks).
      */
-    @JvmField var POS_TOLERANCE = 6.0
+    @JvmField var TOLERANCE = 6.0
 
     /**
      * The number of ticks in the motor that correspond to 1mm of linear extension.
@@ -23,7 +15,7 @@ object Elevator {
     @JvmField var TICKS_TO_HEIGHT = 4.80089285714
 
     /**
-     * How high the elevator is off the ground (mm)
+     * How high the elevator is off the floor (mm).
      */
     @JvmField var HEIGHT_OFFSET = 60.0
 
@@ -37,11 +29,19 @@ object Elevator {
      */
     @JvmField var MAX_HEIGHT = 1500.0
 
-    @JvmField var TEST_MOTOR_SET = 1.0
+    @JvmField var INPUT_DEADZONE = 0.1
+    @JvmField var INPUT_CURVE = 1.5
+    @JvmField var INPUT_SCALE = 1.0
 
-    @JvmField var ELEVATOR_DEADZONE = 0.1
-    @JvmField var ELEVATOR_CURVE = 1.5
-    @JvmField var ELEVATOR_SCALE = 1.0
+    @JvmField var PRESET_HEIGHTS = listOf(0.0, 100.0, 200.0, 300.0)
 
-    @JvmField var ELEVATOR_PRESET_HEIGHTS = mutableListOf(0.0, 0.0, 0.0, 0.0)
+    /**
+     * The maximum speed of the elevator when manually controlled (ticks per second).
+     */
+    @JvmField var MANUAL_SPEED = 1000.0
+
+    @JvmField var AUTO_KP = 0.0
+    @JvmField var AUTO_KI = 0.0
+    @JvmField var AUTO_KD = 0.0
+    @JvmField var AUTO_KF = 0.0
 }
