@@ -19,7 +19,7 @@ class ElevatorSubsystem(
         Stopped, Manual, Auto
     }
 
-    var mode = ElevatorMode.Stopped
+    var mode = ElevatorMode.Auto
         private set
 
     /**
@@ -65,6 +65,8 @@ class ElevatorSubsystem(
         // The motor needs to be inverted because of the way it is mounted
         motor.inverted = true
 
+        motor.resetEncoder()
+
         // Set the motor to keep a constant velocity
         motor.setRunMode(Motor.RunMode.VelocityControl)
         // Set the motor to brake when stopped, which is our starting state
@@ -75,6 +77,7 @@ class ElevatorSubsystem(
     }
 
     override fun periodic() {
+        autoController.setPoint = 700.0
         when (mode) {
             ElevatorMode.Auto -> autoPeriodic()
             ElevatorMode.Manual -> manualPeriodic()

@@ -12,10 +12,11 @@ class ElevateUp(
     system: ElevatorSubsystem
 ) : SimpleCommand<ElevatorSubsystem>(telemetry, system) {
     override fun initialize() {
-        system.moveToPreset(system.findNearestPreset(Direction.UP))
+        //system.moveToPreset(2)
     }
 
     override fun isFinished(): Boolean {
+        return false
         return system.atTargetHeight
     }
 }

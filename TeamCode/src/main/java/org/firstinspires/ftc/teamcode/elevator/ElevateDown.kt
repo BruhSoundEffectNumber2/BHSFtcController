@@ -16,6 +16,7 @@ class ElevateDown(
     }
 
     override fun isFinished(): Boolean {
+        return true
         return system.atTargetHeight
     }
 }

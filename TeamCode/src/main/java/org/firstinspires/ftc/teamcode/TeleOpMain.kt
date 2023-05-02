@@ -30,7 +30,9 @@ class TeleOpMain : CommandOpMode() {
 
         val elevatorSubsystem = ElevatorSubsystem(hardwareMap, robotTelemetry)
 
-        schedule(driveManually)
+        schedule(driveManually, ElevateUp(robotTelemetry, elevatorSubsystem))
+
+        return
 
         controls2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
             ElevateUp(
@@ -49,6 +51,6 @@ class TeleOpMain : CommandOpMode() {
         super.run()
 
         // We want to have one telemetry update at the end of the loop
-        telemetry.update()
+        robotTelemetry.update()
     }
 }
