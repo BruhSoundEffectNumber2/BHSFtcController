@@ -8,11 +8,13 @@ import com.arcrobotics.ftclib.command.SelectCommand
 import com.arcrobotics.ftclib.command.SequentialCommandGroup
 import com.arcrobotics.ftclib.command.WaitCommand
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous
+import com.qualcomm.robotcore.eventloop.opmode.Disabled
 import org.firstinspires.ftc.teamcode.move.DriveForTime
 import org.firstinspires.ftc.teamcode.move.MoveSubsystem
 import org.firstinspires.ftc.teamcode.signal.ReadSignalState
 import org.firstinspires.ftc.teamcode.signal.SignalState
 
+@Disabled
 @Autonomous(name = "Simple Auto")
 class AutoSimple : CommandOpMode() {
     private val stores = mutableMapOf<String, Any>()

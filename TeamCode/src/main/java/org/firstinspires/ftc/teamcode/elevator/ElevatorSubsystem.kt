@@ -30,6 +30,9 @@ class ElevatorSubsystem(
     val currentHeight: Double
         get() = component.currentPosition / Elevator.TICKS_TO_HEIGHT
 
+    val atTargetHeight: Boolean
+        get() = component.atTargetPosition()
+
     private val autoController =
         PIDFController(Elevator.AUTO_KP, Elevator.AUTO_KI, Elevator.AUTO_KD, Elevator.AUTO_KF)
 

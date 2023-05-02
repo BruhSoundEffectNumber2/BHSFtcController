@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.grab
+package org.firstinspires.ftc.teamcode.claw
 
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry
 import com.arcrobotics.ftclib.command.button.GamepadButton
@@ -6,9 +6,9 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx
 import com.arcrobotics.ftclib.gamepad.GamepadKeys
 import org.firstinspires.ftc.teamcode.SimpleCommand
 
-class Grab(telemetry: MultipleTelemetry, system: GrabSubsystem, private val controls: GamepadEx
-) : SimpleCommand<GrabSubsystem>(telemetry, system) {
+class ToggleClaw(telemetry: MultipleTelemetry, system: ClawSubsystem, private val controls: GamepadEx
+) : SimpleCommand<ClawSubsystem>(telemetry, system) {
     override fun initialize() {
-        GamepadButton(controls, GamepadKeys.Button.X).whenPressed(system::toggle)
+        system.toggle()
     }
 }
