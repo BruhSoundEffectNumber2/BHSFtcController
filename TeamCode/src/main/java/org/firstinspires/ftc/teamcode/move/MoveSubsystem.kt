@@ -35,15 +35,18 @@ class MoveSubsystem(
     }
 
     override fun periodic() {
+        // The motors are inverted because of the way they are mounted
+        component.driveRobotCentric(-strafe, -forward, -turn)
+
         telemetry.addData("Forward", forward)
         telemetry.addData("Strafe", strafe)
         telemetry.addData("Turn", turn)
-        
-        component.driveRobotCentric(strafe, forward, turn)
     }
 
     override fun createComponent(): MecanumDrive {
         return MecanumDrive(
+            // We need to invert the right motors because of the way they are mounted
+            true,
             Motor(hardwareMap, Hardware.FRONT_LEFT, Hardware.DRIVE_TYPE),
             Motor(hardwareMap, Hardware.FRONT_RIGHT, Hardware.DRIVE_TYPE),
             Motor(hardwareMap, Hardware.BACK_LEFT, Hardware.DRIVE_TYPE),

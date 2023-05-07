@@ -21,6 +21,6 @@ dependencies {
     implementation 'org.firstinspires.ftc:gameAssets-PowerPlay:1.0.0'
 
     // FTC Dashboard
-    implementation 'com.acmerobotics.dashboard:dashboard:0.4.6'
+    implementation 'com.acmerobotics.dashboard:dashboard:0.4.9'
 }
 

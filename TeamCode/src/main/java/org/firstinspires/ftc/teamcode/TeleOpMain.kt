@@ -6,10 +6,12 @@ import com.arcrobotics.ftclib.command.CommandOpMode
 import com.arcrobotics.ftclib.gamepad.GamepadEx
 import com.arcrobotics.ftclib.gamepad.GamepadKeys
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp
-import org.firstinspires.ftc.teamcode.elevator.ElevateDown
-import org.firstinspires.ftc.teamcode.elevator.ElevateUp
-import org.firstinspires.ftc.teamcode.elevator.ElevatorSubsystem
 import org.firstinspires.ftc.teamcode.claw.ClawSubsystem
+import org.firstinspires.ftc.teamcode.claw.ToggleClaw
+import org.firstinspires.ftc.teamcode.config.Elevator
+import org.firstinspires.ftc.teamcode.elevator.ElevatorDown
+import org.firstinspires.ftc.teamcode.elevator.ElevatorSubsystem
+import org.firstinspires.ftc.teamcode.elevator.ElevatorUp
 import org.firstinspires.ftc.teamcode.move.DriveManually
 import org.firstinspires.ftc.teamcode.move.MoveSubsystem
 
@@ -27,24 +29,32 @@ class TeleOpMain : CommandOpMode() {
         val driveManually = DriveManually(robotTelemetry, moveSubsystem, controls1)
 
         val clawSubsystem = ClawSubsystem(hardwareMap, robotTelemetry)
+        val toggleClaw = ToggleClaw(robotTelemetry, clawSubsystem)
 
-        val elevatorSubsystem = ElevatorSubsystem(hardwareMap, robotTelemetry)
-
-        schedule(driveManually, ElevateUp(robotTelemetry, elevatorSubsystem))
-
-        return
-
-        controls2.getGamepadButton(GamepadKeys.Button.DPAD_UP).whenPressed(
-            ElevateUp(
-                robotTelemetry, elevatorSubsystem
+        val elevatorSubsystem = ElevatorSubsystem(
+            hardwareMap, robotTelemetry
+        ) {
+            inputToPower(
+                controls2.rightY,
+                Elevator.INPUT_CURVE,
+                Elevator.INPUT_DEADZONE,
+                Elevator.INPUT_SCALE
             )
-        )
+        }
 
-        controls2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN).whenPressed(
-            ElevateDown(
-                robotTelemetry, elevatorSubsystem
-            )
-        )
+        val elevatorUp = ElevatorUp(robotTelemetry, elevatorSubsystem)
+        val elevatorDown = ElevatorDown(robotTelemetry, elevatorSubsystem)
+
+        controls2.getGamepadButton(GamepadKeys.Button.X)
+            .whenPressed(toggleClaw)
+
+        controls2.getGamepadButton(GamepadKeys.Button.DPAD_UP)
+            .whenPressed(elevatorUp)
+
+        controls2.getGamepadButton(GamepadKeys.Button.DPAD_DOWN)
+            .whenPressed(elevatorDown)
+
+        schedule(driveManually)
     }
 
     override fun run() {
